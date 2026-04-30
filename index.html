@@ -3,826 +3,487 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DUSTARCHIVE — DISTRICT II REGISTRY</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<title>Designer or Homemaker?</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --linen:    #D9D0BF;
-    --parchment:#E6DFD0;
-    --fog:      #C4BAA8;
-    --plate:    #CECABD;
-    --bar:      #3A3330;
-    --ink:      #2E2A27;
-    --mid:      #6B6055;
-    --faint:    #A09488;
-    --open:     #7A8C70;
-    --denied:   #8C5F5A;
-    --line:     #BBB3A4;
-  }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  html { scroll-behavior: smooth; }
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: #F5F0E8;
+  color: #1A1A1A;
+  min-height: 100vh;
+}
 
-  body {
-    background: var(--parchment);
-    color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    line-height: 1.6;
-    cursor: default;
-  }
+/* screens */
+.screen { display: none; min-height: 100vh; }
+.screen.active { display: flex; flex-direction: column; }
 
-  /* grain */
-  body::before {
-    content: '';
-    position: fixed; inset: 0; z-index: 999;
-    pointer-events: none;
-    opacity: 0.06;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-size: 128px;
-  }
+/* ── INTRO ── */
+#intro {
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem;
+  border-bottom: 3px solid #1A1A1A;
+}
 
-  /* ── NAV / HEADER BAR ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: var(--bar);
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0 48px;
-    height: 44px;
-  }
+.tag {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 2rem;
+}
 
-  .nav-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 800;
-    letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--linen);
-  }
+.intro-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 9vw, 7rem);
+  font-weight: 400;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
 
-  .nav-right {
-    display: flex; align-items: center; gap: 40px;
-  }
+.intro-title .or {
+  font-style: italic;
+  color: #C0392B;
+}
 
-  .nav-links {
-    display: flex; gap: 32px;
-  }
+.intro-rule { width: 100%; height: 3px; background: #1A1A1A; margin: 2rem 0; }
 
-  .nav-links a {
-    font-family: 'Space Mono', monospace;
-    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--fog); text-decoration: none;
-    transition: color 0.15s;
-  }
-  .nav-links a:hover { color: var(--linen); }
+.intro-desc {
+  font-size: 1rem;
+  color: #555;
+  max-width: 500px;
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+}
 
-  .nav-status {
-    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--open);
-    padding-left: 32px;
-    border-left: 1px solid #5a5048;
-  }
+.btn {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  background: #1A1A1A;
+  color: #F5F0E8;
+  border: 3px solid #1A1A1A;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.15s, color 0.15s;
+}
+.btn:hover { background: #F5F0E8; color: #1A1A1A; }
 
-  /* ── HERO ── */
-  .hero {
-    padding-top: 44px;
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    position: relative;
-  }
+/* ── GAME ── */
+#game {
+  flex-direction: column;
+}
 
-  /* top info strip */
-  .hero-strip {
-    background: var(--linen);
-    border-bottom: 1px solid var(--line);
-    padding: 14px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+.game-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  border-bottom: 2px solid #1A1A1A;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #888;
+}
 
-  .strip-code {
-    font-size: 9px; letter-spacing: 0.2em; color: var(--mid);
-    text-transform: uppercase;
-  }
+.progress-wrap {
+  flex: 1;
+  height: 4px;
+  background: #D5CEBD;
+  margin: 0 2rem;
+}
+.progress-fill {
+  height: 100%;
+  background: #C0392B;
+  transition: width 0.4s ease;
+}
 
-  .strip-status {
-    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
-    color: var(--open);
-  }
+.game-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 2rem;
+  max-width: 700px;
+  margin: 0 auto;
+  width: 100%;
+}
 
-  /* main hero body */
-  .hero-body {
-    flex: 1;
-    display: grid;
-    grid-template-columns: 1fr 340px;
-    border-bottom: 1px solid var(--line);
-  }
+.who-said {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 1.5rem;
+}
 
-  .hero-left {
-    padding: 80px 48px 80px;
-    border-right: 1px solid var(--line);
-    display: flex; flex-direction: column; justify-content: space-between;
-  }
+.quote-box {
+  border: 2px solid #1A1A1A;
+  padding: 2rem 2rem;
+  margin-bottom: 2.5rem;
+  background: #fff;
+}
 
-  .hero-eyebrow {
-    font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase;
-    color: var(--mid); margin-bottom: 40px;
-  }
+.quote-box p {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.2rem, 2.8vw, 1.6rem);
+  line-height: 1.55;
+  font-style: italic;
+}
 
-  .hero-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: clamp(72px, 11vw, 148px);
-    font-weight: 800; line-height: 0.88;
-    letter-spacing: -0.01em; text-transform: uppercase;
-    color: var(--ink);
-  }
+.choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
 
-  .hero-title .sub {
-    font-weight: 300;
-    color: var(--mid);
-  }
+.choice {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 1.4rem 1rem;
+  border: 2px solid #1A1A1A;
+  background: #F5F0E8;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.1s;
+}
+.choice:hover { background: #1A1A1A; color: #F5F0E8; }
+.choice:active { transform: scale(0.97); }
+.choice:disabled { opacity: 0.4; cursor: default; }
 
-  .hero-bottom {
-    border-top: 1px solid var(--line);
-    padding-top: 28px;
-    display: flex; gap: 60px;
-  }
+/* ── REVEAL PANEL ── */
+.reveal-panel {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(26,26,26,0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+.reveal-panel.open { display: flex; }
 
-  .meta-item {}
-  .meta-label { font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
-  .meta-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px; font-weight: 700; letter-spacing: 0.05em;
-    color: var(--ink);
-  }
+.reveal-box {
+  background: #F5F0E8;
+  border: 3px solid #1A1A1A;
+  padding: 2.5rem 2.5rem 2rem;
+  max-width: 540px;
+  width: 100%;
+  animation: popIn 0.25s cubic-bezier(.34,1.56,.64,1);
+}
 
-  /* hero right — ID panel */
-  .hero-right {
-    padding: 40px 32px;
-    background: var(--linen);
-    display: flex; flex-direction: column; gap: 0;
-  }
+@keyframes popIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
 
-  .id-header {
-    background: var(--bar);
-    color: var(--linen);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 800;
-    letter-spacing: 0.25em; text-transform: uppercase;
-    padding: 8px 12px;
-    margin: -40px -32px 28px;
-  }
+.verdict {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+.verdict.both { color: #1A6B3C; }
+.verdict.close { color: #C0392B; }
 
-  .id-field { margin-bottom: 20px; }
-  .id-label { font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); margin-bottom: 3px; }
-  .id-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: var(--ink);
-  }
-  .id-val.large {
-    font-size: 40px; letter-spacing: 0.03em; line-height: 1;
-  }
+.reveal-rule { width: 100%; height: 2px; background: #1A1A1A; margin: 1.2rem 0; }
 
-  .id-divider {
-    height: 1px; background: var(--line);
-    margin: 16px 0;
-  }
+.explain {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: #444;
+  margin-bottom: 1.2rem;
+}
 
-  .id-row {
-    display: flex; gap: 32px; margin-bottom: 20px;
-  }
+.principle-tag {
+  display: inline-block;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 700;
+  background: #1A1A1A;
+  color: #F5F0E8;
+  padding: 0.3rem 0.8rem;
+  margin-bottom: 1.8rem;
+}
 
-  .id-zone-header {
-    background: var(--bar);
-    color: var(--linen);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 10px; font-weight: 800;
-    letter-spacing: 0.22em; text-transform: uppercase;
-    padding: 6px 12px;
-    margin: 8px -32px 12px;
-  }
+/* ── END ── */
+#end {
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 3rem;
+}
 
-  .zone-entry {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 8px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .zone-name { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--mid); }
-  .zone-sub { font-size: 8px; color: var(--faint); margin-top: 1px; }
-  .zone-access { font-size: 9px; letter-spacing: 0.15em; font-weight: 700; text-transform: uppercase; }
-  .zone-access.open { color: var(--open); }
-  .zone-access.denied { color: var(--denied); }
+.end-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+.end-title em { font-style: italic; color: #C0392B; }
 
-  .id-barcode {
-    margin-top: auto;
-    padding-top: 20px;
-    border-top: 1px solid var(--line);
-  }
-  .barcode-line {
-    display: flex; gap: 1px; height: 28px; margin-bottom: 6px;
-  }
-  .barcode-line span {
-    background: var(--ink);
-    flex-shrink: 0;
-  }
-  .barcode-text {
-    font-size: 8px; letter-spacing: 0.1em; color: var(--faint); text-transform: uppercase;
-  }
+.end-rule { width: 100%; height: 3px; background: #1A1A1A; margin: 1.5rem 0; }
 
-  /* ── TICKER ── */
-  .ticker {
-    background: var(--bar);
-    padding: 8px 0;
-    overflow: hidden; white-space: nowrap;
-  }
-  .ticker-inner {
-    display: inline-flex;
-    animation: ticker 30s linear infinite;
-  }
-  .ticker-item {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--fog);
-    padding: 0 28px;
-  }
-  .ticker-sep { color: #5a5048; }
-  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+.end-body {
+  font-size: 0.95rem;
+  color: #555;
+  max-width: 580px;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
 
-  /* ── SHARED SECTION STYLES ── */
-  .sec-bar {
-    background: var(--bar);
-    color: var(--linen);
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase;
-    padding: 8px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
+.end-thesis {
+  border: 2px solid #1A1A1A;
+  padding: 1.5rem 2rem;
+  max-width: 620px;
+  margin-bottom: 2rem;
+  background: #fff;
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: #333;
+}
+.end-thesis strong { color: #1A1A1A; }
 
-  .sec-bar span {
-    font-weight: 400; color: var(--faint); font-size: 9px; letter-spacing: 0.18em;
-    font-family: 'Space Mono', monospace;
-  }
+.stats {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 2.5rem;
+  background: #1A1A1A;
+}
+.stat {
+  background: #F5F0E8;
+  padding: 1.2rem 2rem;
+  text-align: center;
+  flex: 1;
+}
+.stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  color: #C0392B;
+  line-height: 1;
+}
+.stat-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: #888;
+  margin-top: 0.4rem;
+}
 
-  /* ── ARCHIVE SECTION ── */
-  #archive { border-top: 1px solid var(--line); }
+.btn-ghost {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: transparent;
+  color: #1A1A1A;
+  border: 2px solid #1A1A1A;
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: background 0.12s, color 0.12s;
+}
+.btn-ghost:hover { background: #1A1A1A; color: #F5F0E8; }
 
-  .archive-table {
-    width: 100%;
-    border-collapse: collapse;
-  }
-
-  .archive-table thead tr {
-    background: var(--linen);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .archive-table th {
-    font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase;
-    color: var(--faint); font-weight: 400;
-    padding: 12px 48px;
-    text-align: left;
-  }
-
-  .archive-table th:last-child { text-align: right; }
-
-  .archive-table tbody tr {
-    border-bottom: 1px solid var(--line);
-    transition: background 0.15s;
-  }
-  .archive-table tbody tr:hover { background: var(--linen); }
-
-  .archive-table td {
-    padding: 22px 48px;
-    vertical-align: top;
-  }
-
-  .td-code {
-    font-size: 9px; letter-spacing: 0.15em; color: var(--faint);
-    white-space: nowrap; width: 120px;
-  }
-
-  .td-title {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 22px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.04em; color: var(--ink);
-    line-height: 1.1;
-  }
-  .td-sub {
-    font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--faint); margin-top: 4px;
-  }
-
-  .td-desc {
-    font-size: 10px; color: var(--mid); line-height: 1.7;
-    max-width: 360px;
-  }
-
-  .td-period {
-    font-size: 9px; letter-spacing: 0.12em; color: var(--mid);
-    white-space: nowrap;
-  }
-
-  .td-status {
-    text-align: right; white-space: nowrap;
-  }
-  .status-tag {
-    font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 700;
-    padding: 4px 10px;
-    border: 1px solid;
-  }
-  .status-tag.open { color: var(--open); border-color: var(--open); }
-  .status-tag.restricted { color: var(--denied); border-color: var(--denied); }
-  .status-tag.sealed { color: var(--faint); border-color: var(--line); }
-
-  /* ── RECORD PANEL ── */
-  .record-band {
-    display: grid;
-    grid-template-columns: 1fr 1px 1fr 1px 1fr;
-    background: var(--linen);
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-  }
-
-  .record-divider { background: var(--line); }
-
-  .record-cell {
-    padding: 48px;
-  }
-
-  .record-num {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 56px; font-weight: 800; line-height: 1;
-    color: var(--ink); margin-bottom: 8px;
-  }
-  .record-label {
-    font-size: 8px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--faint);
-  }
-  .record-desc {
-    font-size: 10px; color: var(--mid); line-height: 1.8; margin-top: 16px;
-    border-top: 1px solid var(--line); padding-top: 16px;
-  }
-
-  /* ── ABOUT ── */
-  #about { border-top: 1px solid var(--line); }
-
-  .about-body {
-    display: grid;
-    grid-template-columns: 380px 1fr;
-    gap: 0;
-  }
-
-  .about-left {
-    padding: 64px 48px;
-    border-right: 1px solid var(--line);
-  }
-
-  .about-heading {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 11px; font-weight: 800; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--faint); margin-bottom: 32px;
-  }
-
-  .about-text {
-    font-size: 11px; line-height: 2; color: var(--mid);
-  }
-  .about-text p { margin-bottom: 20px; }
-
-  .about-right {
-    padding: 64px 48px;
-  }
-
-  .field-row {
-    display: flex; justify-content: space-between; align-items: baseline;
-    padding: 16px 0;
-    border-bottom: 1px solid var(--line);
-  }
-  .field-key { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--faint); }
-  .field-val {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 16px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase;
-    color: var(--ink);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--bar);
-    padding: 0 48px;
-  }
-
-  .footer-main {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 28px 0;
-    border-bottom: 1px solid #4a4038;
-  }
-
-  .footer-logo {
-    font-family: 'Barlow Condensed', sans-serif;
-    font-size: 20px; font-weight: 800; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--linen);
-  }
-
-  .footer-links {
-    display: flex; gap: 32px;
-  }
-  .footer-links a {
-    font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
-    color: var(--faint); text-decoration: none;
-  }
-
-  .footer-sub {
-    padding: 16px 0;
-    display: flex; justify-content: space-between;
-    font-size: 9px; letter-spacing: 0.12em; color: #5a5048;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 900px) {
-    nav { padding: 0 24px; }
-    .nav-links, .nav-status { display: none; }
-    .hero-body { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 48px 24px; }
-    .hero-strip { padding: 12px 24px; }
-    .sec-bar { padding: 8px 24px; }
-    .archive-table th { padding: 12px 24px; }
-    .archive-table td { padding: 18px 24px; }
-    .td-desc, .td-period { display: none; }
-    .record-band { grid-template-columns: 1fr; }
-    .record-divider { display: none; }
-    .record-cell { padding: 32px 24px; border-bottom: 1px solid var(--line); }
-    .about-body { grid-template-columns: 1fr; }
-    .about-left { border-right: none; border-bottom: 1px solid var(--line); padding: 40px 24px; }
-    .about-right { padding: 40px 24px; }
-    footer { padding: 0 24px; }
-    .ticker { display: none; }
-  }
+@media (max-width: 600px) {
+  #intro, #end { padding: 2rem 1.5rem; }
+  .game-body { padding: 2rem 1.5rem; }
+  .choices { grid-template-columns: 1fr; }
+  .stats { flex-direction: column; gap: 1px; }
+  .reveal-box { padding: 2rem 1.5rem; }
+  .game-top { padding: 1rem 1.5rem; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Dustarchive</div>
-  <div class="nav-right">
-    <div class="nav-links">
-      <a href="#archive">Archive</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
+<!-- INTRO -->
+<div id="intro" class="screen active">
+  <p class="tag">Design Studies — Final Project, Option 1</p>
+  <h1 class="intro-title">Designer<br><span class="or">or</span><br>Homemaker?</h1>
+  <div class="intro-rule"></div>
+  <p class="intro-desc">Read a real quote. Guess who said it — a professional designer or a homemaker. Play all 7 rounds to find out why the answer matters.</p>
+  <button class="btn" id="startBtn">Play Now →</button>
+</div>
+
+<!-- GAME -->
+<div id="game" class="screen">
+  <div class="game-top">
+    <span id="roundNum">Round 1 / 7</span>
+    <div class="progress-wrap">
+      <div class="progress-fill" id="progressFill" style="width:0%"></div>
     </div>
-    <div class="nav-status">Registry Open</div>
+    <span id="scoreNum">Score: 0</span>
   </div>
-</nav>
-
-<!-- HERO -->
-<div class="hero">
-
-  <div class="hero-strip">
-    <div class="strip-code">DUST AUTHORITY — DISTRICT II REGISTRY — REF: DA-900-ARCHIVE</div>
-    <div class="strip-status">Status: Authorized Access</div>
-  </div>
-
-  <div class="hero-body">
-
-    <div class="hero-left">
-      <div>
-        <div class="hero-eyebrow">Field Documentation — Nevada Basin — 37°12'N 115°48'W</div>
-        <h1 class="hero-title">
-          Dust<br><span class="sub">Archive</span>
-        </h1>
-      </div>
-      <div>
-        <p style="font-size:11px;color:var(--mid);line-height:2;max-width:480px;margin-bottom:40px;">
-          A record of forms cut into earth.<br>
-          Mass without ornament.<br>
-          Time made visible in stone and silence.<br>
-          The city endures. The city records.
-        </p>
-        <div class="hero-bottom">
-          <div class="meta-item">
-            <div class="meta-label">Est.</div>
-            <div class="meta-val">1972</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Area</div>
-            <div class="meta-val">1.5 mi²</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">Elevation</div>
-            <div class="meta-val">5,312 ft</div>
-          </div>
-          <div class="meta-item">
-            <div class="meta-label">District</div>
-            <div class="meta-val">II</div>
-          </div>
-        </div>
-      </div>
+  <div class="game-body">
+    <p class="who-said">Who said this?</p>
+    <div class="quote-box">
+      <p id="quoteText"></p>
     </div>
-
-    <!-- RIGHT PANEL — styled like the ID plate -->
-    <div class="hero-right">
-      <div class="id-header">Identity Plate</div>
-
-      <div class="id-field">
-        <div class="id-label">Registered Name</div>
-        <div class="id-val large">DUSTARCHIVE</div>
-      </div>
-
-      <div class="id-divider"></div>
-
-      <div class="id-field">
-        <div class="id-label">Identification Code</div>
-        <div class="id-val">DA-900-ARCH</div>
-      </div>
-
-      <div class="id-divider"></div>
-
-      <div class="id-row">
-        <div class="id-field">
-          <div class="id-label">District</div>
-          <div class="id-val large">II</div>
-        </div>
-        <div class="id-field">
-          <div class="id-label">Class</div>
-          <div class="id-val large">A</div>
-        </div>
-      </div>
-
-      <div class="id-field">
-        <div class="id-label">Status</div>
-        <div class="id-val">Authorized</div>
-      </div>
-
-      <div class="id-field">
-        <div class="id-label">Issue Date</div>
-        <div class="id-val">04.12.26</div>
-      </div>
-
-      <div class="id-zone-header">Zone Access</div>
-
-      <div class="zone-entry">
-        <div>
-          <div class="zone-name">District II</div>
-          <div class="zone-sub">Archive Core</div>
-        </div>
-        <div class="zone-access open">Open</div>
-      </div>
-      <div class="zone-entry">
-        <div>
-          <div class="zone-name">District IV</div>
-          <div class="zone-sub">Transit Perimeter</div>
-        </div>
-        <div class="zone-access open">Open</div>
-      </div>
-      <div class="zone-entry">
-        <div>
-          <div class="zone-name">District I</div>
-          <div class="zone-sub">Civic Core</div>
-        </div>
-        <div class="zone-access denied">Denied</div>
-      </div>
-      <div class="zone-entry">
-        <div>
-          <div class="zone-name">Lower Archive</div>
-          <div class="zone-sub">Sealed Chamber</div>
-        </div>
-        <div class="zone-access denied">Denied</div>
-      </div>
-
-      <div class="id-barcode">
-        <div class="barcode-line">
-          <!-- barcode bars -->
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:4px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:3px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:4px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:3px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:4px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:3px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:4px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:3px"></span><span style="width:2px;background:transparent"></span>
-          <span style="width:2px"></span><span style="width:1px;background:transparent"></span>
-          <span style="width:1px"></span><span style="width:3px;background:transparent"></span>
-          <span style="width:3px"></span>
-        </div>
-        <div class="barcode-text">DA - 900 - ARCH - CLASS A - AUTHORIZED</div>
-      </div>
+    <div class="choices">
+      <button class="choice" id="btnDesigner">🏢 Professional Designer</button>
+      <button class="choice" id="btnHomemaker">🏠 Homemaker</button>
     </div>
   </div>
 </div>
 
-<!-- TICKER -->
-<div class="ticker">
-  <div class="ticker-inner">
-    <span class="ticker-item">Complex One</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Two</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Three</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Four</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Five</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Six</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">District II Archive</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Clearance Required</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex One</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Two</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Three</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Four</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Five</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Complex Six</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">District II Archive</span><span class="ticker-sep"> — </span>
-    <span class="ticker-item">Clearance Required</span><span class="ticker-sep"> — </span>
+<!-- REVEAL PANEL -->
+<div class="reveal-panel" id="revealPanel">
+  <div class="reveal-box">
+    <p class="verdict" id="revealVerdict"></p>
+    <div class="reveal-rule"></div>
+    <p class="explain" id="revealExplain"></p>
+    <span class="principle-tag" id="revealPrinciple"></span>
+    <br>
+    <button class="btn" id="btnNext">Next Round →</button>
   </div>
 </div>
 
-<!-- ARCHIVE -->
-<section id="archive">
-  <div class="sec-bar">
-    Archive — Field Records
-    <span>DA-ARCH / 001–006 / DISTRICT II</span>
+<!-- END -->
+<div id="end" class="screen">
+  <p class="tag">The answer was always the same</p>
+  <h2 class="end-title">She was the<br><em>designer</em><br>all along.</h2>
+  <div class="end-rule"></div>
+  <p class="end-body">Every single quote came from our research subject — a homemaker with no formal design training, no title, no salary. Every single principle is taught in design school.</p>
+  <div class="end-thesis">
+    <strong>The argument this game just made:</strong><br><br>
+    The gap between "homemaker" and "designer" is not a gap of skill or intent — it is a gap of <strong>recognition</strong>. Produced by gender norms that coded the domestic sphere as trivial, economic systems that made unpaid labor invisible, and design institutions that built their identity by excluding her. She selects materials, designs for atmosphere, iterates on workflows, and thinks about her users. The only thing missing is the word <strong>"designer"</strong> on the door.
   </div>
-
-  <table class="archive-table">
-    <thead>
-      <tr>
-        <th>Ref</th>
-        <th>Designation</th>
-        <th>Description</th>
-        <th>Period</th>
-        <th>Access</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td class="td-code">DA-001</td>
-        <td>
-          <div class="td-title">Complex One</div>
-          <div class="td-sub">Nevada Basin — Sector A</div>
-        </td>
-        <td class="td-desc">The first structure. A mound of compacted earth rising from the basin floor. Orientation determined by solar alignment at equinox.</td>
-        <td class="td-period">1972 — Ongoing</td>
-        <td class="td-status"><span class="status-tag open">Open</span></td>
-      </tr>
-      <tr>
-        <td class="td-code">DA-002</td>
-        <td>
-          <div class="td-title">Complex Two</div>
-          <div class="td-sub">Nevada Basin — Sector B</div>
-        </td>
-        <td class="td-desc">Concrete and stone. A passage that narrows. The architecture of threshold — entry and enclosure made monumental.</td>
-        <td class="td-period">1974 — Ongoing</td>
-        <td class="td-status"><span class="status-tag open">Open</span></td>
-      </tr>
-      <tr>
-        <td class="td-code">DA-003</td>
-        <td>
-          <div class="td-title">Complex Three</div>
-          <div class="td-sub">Nevada Basin — Sector C</div>
-        </td>
-        <td class="td-desc">Cut into the alluvial plain. The negative space as form. The removed earth is the sculpture.</td>
-        <td class="td-period">1976 — Ongoing</td>
-        <td class="td-status"><span class="status-tag open">Open</span></td>
-      </tr>
-      <tr>
-        <td class="td-code">DA-004</td>
-        <td>
-          <div class="td-title">Complex Four</div>
-          <div class="td-sub">Nevada Basin — Sector D</div>
-        </td>
-        <td class="td-desc">Lateral berms extending from a central axis. Shadow as measurement. Time recorded through movement of light across raw surfaces.</td>
-        <td class="td-period">1981 — Ongoing</td>
-        <td class="td-status"><span class="status-tag restricted">Restricted</span></td>
-      </tr>
-      <tr>
-        <td class="td-code">DA-005</td>
-        <td>
-          <div class="td-title">Complex Five</div>
-          <div class="td-sub">Nevada Basin — Sector E</div>
-        </td>
-        <td class="td-desc">A crater and a mound. Inversion as language. The earth displaced above and below the plane of the desert floor.</td>
-        <td class="td-period">1989 — Ongoing</td>
-        <td class="td-status"><span class="status-tag restricted">Restricted</span></td>
-      </tr>
-      <tr>
-        <td class="td-code">DA-006</td>
-        <td>
-          <div class="td-title">Complex Six</div>
-          <div class="td-sub">Nevada Basin — Lower Sector</div>
-        </td>
-        <td class="td-desc">Five decades of accumulation. A city with no inhabitants, no commerce — only mass, geometry, and duration.</td>
-        <td class="td-period">1994 — Ongoing</td>
-        <td class="td-status"><span class="status-tag sealed">Sealed</span></td>
-      </tr>
-    </tbody>
-  </table>
-</section>
-
-<!-- RECORD BAND -->
-<div class="record-band">
-  <div class="record-cell">
-    <div class="record-num">52</div>
-    <div class="record-label">Years of Construction</div>
-    <div class="record-desc">Ongoing since 1972. No completion date registered in District II records.</div>
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-n">7</div>
+      <div class="stat-label">Design Principles</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n">1</div>
+      <div class="stat-label">Person. No training.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-n" id="finalScore">0/7</div>
+      <div class="stat-label">Your Score</div>
+    </div>
   </div>
-  <div class="record-divider"></div>
-  <div class="record-cell">
-    <div class="record-num">40M</div>
-    <div class="record-label">Lbs of Earth Displaced</div>
-    <div class="record-desc">Movement documented across six major sites. Material classified as civic infrastructure.</div>
-  </div>
-  <div class="record-divider"></div>
-  <div class="record-cell">
-    <div class="record-num">∞</div>
-    <div class="record-label">Duration Intended</div>
-    <div class="record-desc">No terminus filed. The city endures beyond the span of any single authorized record.</div>
-  </div>
+  <button class="btn-ghost" id="restartBtn">↺ Play Again</button>
 </div>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="sec-bar">
-    About this Archive
-    <span>Class A — District II — Authorized</span>
-  </div>
-  <div class="about-body">
-    <div class="about-left">
-      <div class="about-heading">Archive Registry — District II</div>
-      <div class="about-text">
-        <p>Dustarchive is a documentation project focused on monumental earthworks — structures that exist in relationship with geological time rather than human time.</p>
-        <p>We record works that resist the gallery, the museum, the white cube. Works that require travel, endurance, and encounter with scale that cannot be reproduced.</p>
-        <p>The desert is not a backdrop. It is a medium. Dust is not absence — it is accumulation.</p>
-      </div>
-    </div>
-    <div class="about-right">
-      <div class="field-row">
-        <div class="field-key">Site</div>
-        <div class="field-val">Garden Valley, Nevada</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Coordinates</div>
-        <div class="field-val">37.2041° N — 115.8015° W</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Material</div>
-        <div class="field-val">Earth, Concrete, Steel, Granite</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Area</div>
-        <div class="field-val">1.5 Square Miles</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">District Classification</div>
-        <div class="field-val">II — Class A</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Registry Status</div>
-        <div class="field-val" style="color:var(--open)">Active — Authorized</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Record Reference</div>
-        <div class="field-val">DA-900-ARCH</div>
-      </div>
-      <div class="field-row">
-        <div class="field-key">Issue Date</div>
-        <div class="field-val">04.12.26</div>
-      </div>
-    </div>
-  </div>
-</section>
+<script>
+var rounds = [
+  {
+    quote: "\"It's more like — you first sense the problem, and then you make the changes. One gradually figures out what is more efficient and less strenuous.\"",
+    principle: "Iterative Design",
+    explain: "This is textbook iterative design thinking — responding to friction rather than following a fixed plan. Design schools call it 'reflective practice.' She's been doing it her whole life without the label."
+  },
+  {
+    quote: "\"Beige wooden floorboards, a cotton and linen carpet, a large comfortable white-painted leather sofa — the entire space should exude a relaxed and laid-back atmosphere.\"",
+    principle: "Material Specification & Experiential Intent",
+    explain: "Material specification with a defined experiential goal. Interior designers charge thousands to make exactly this kind of decision. The vocabulary and logic are identical — only the paycheck differs."
+  },
+  {
+    quote: "\"When cooking, I don't like to walk back and forth many times. So I place the things I use frequently in a more convenient location.\"",
+    principle: "Ergonomics & Workflow Optimization",
+    explain: "This is ergonomic flow analysis — the exact logic taught in industrial and kitchen design programs. She self-taught what design schools call 'user flow optimization.'"
+  },
+  {
+    quote: "\"I hope the final effect will be one of tenderness, brightness, and rich texture — representing a gentle and beautiful life.\"",
+    principle: "Experience Design / Emotional Outcome",
+    explain: "She is designing for a felt emotional experience — the explicit goal of experience design and spatial design. 'Beauty is the foundation of the essence of everything' is not a casual statement. It is a design brief."
+  },
+  {
+    quote: "\"The furniture will be chosen from minimalist yet detailed designs by the designers, which can stand the test of time.\"",
+    principle: "Curatorial Judgment & Long-Term Design Thinking",
+    explain: "She evaluates objects for coherence, restraint, and longevity — the same criteria used in design curation and museum acquisition. That is taste, and taste is a learnable, practiced design skill."
+  },
+  {
+    quote: "\"Don't just copy what you see online. Those pictures look beautiful but they're not real life. You still have to cook in that kitchen every single night.\"",
+    principle: "User-Centered Design",
+    explain: "She is spontaneously articulating the central critique of aesthetics-over-function — a foundational debate in design education. Design must serve the person who actually lives in it. She knows this."
+  },
+  {
+    quote: "\"Only when these things are left undone will the family become disordered, and only then will everyone suddenly realize its significance.\"",
+    principle: "Invisible Infrastructure / Critical Design",
+    explain: "Good design disappears when it works. Its value is felt only in its absence — this is what theorists call 'invisible labor.' She didn't read it in a textbook. She lived it, every day, for decades."
+  }
+];
 
-<!-- FOOTER -->
-<footer id="contact">
-  <div class="footer-main">
-    <div class="footer-logo">Dustarchive</div>
-    <div class="footer-links">
-      <a href="#archive">Archive</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </div>
-  <div class="footer-sub">
-    <span>Dust Authority — District II Registry — Nevada Basin</span>
-    <span>II — 14 — A — 04-12-26</span>
-    <span>© 2026</span>
-  </div>
-</footer>
+var current = 0;
+var score = 0;
 
+function show(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  document.getElementById(id).classList.add('active');
+}
+
+function loadRound() {
+  var r = rounds[current];
+  document.getElementById('quoteText').textContent = r.quote;
+  document.getElementById('roundNum').textContent = 'Round ' + (current + 1) + ' / ' + rounds.length;
+  document.getElementById('scoreNum').textContent = 'Score: ' + score;
+  document.getElementById('progressFill').style.width = ((current / rounds.length) * 100) + '%';
+  document.getElementById('btnDesigner').disabled = false;
+  document.getElementById('btnHomemaker').disabled = false;
+}
+
+function guess(choice) {
+  document.getElementById('btnDesigner').disabled = true;
+  document.getElementById('btnHomemaker').disabled = true;
+
+  var r = rounds[current];
+  var correct = (choice === 'homemaker');
+  if (correct) score++;
+
+  var verdict = document.getElementById('revealVerdict');
+  if (correct) {
+    verdict.textContent = 'She is both.';
+    verdict.className = 'verdict both';
+  } else {
+    verdict.textContent = 'Close — she IS the designer.';
+    verdict.className = 'verdict close';
+  }
+
+  document.getElementById('revealExplain').textContent = r.explain;
+  document.getElementById('revealPrinciple').textContent = r.principle;
+
+  var isLast = current === rounds.length - 1;
+  document.getElementById('btnNext').textContent = isLast ? 'See the conclusion →' : 'Next round →';
+
+  document.getElementById('revealPanel').classList.add('open');
+}
+
+function nextRound() {
+  document.getElementById('revealPanel').classList.remove('open');
+  current++;
+  if (current >= rounds.length) {
+    document.getElementById('finalScore').textContent = score + '/' + rounds.length;
+    show('end');
+  } else {
+    loadRound();
+  }
+}
+
+function restartGame() {
+  current = 0;
+  score = 0;
+  loadRound();
+  show('game');
+}
+
+document.getElementById('startBtn').addEventListener('click', function() {
+  loadRound();
+  show('game');
+});
+
+document.getElementById('btnDesigner').addEventListener('click', function() { guess('designer'); });
+document.getElementById('btnHomemaker').addEventListener('click', function() { guess('homemaker'); });
+document.getElementById('btnNext').addEventListener('click', nextRound);
+document.getElementById('restartBtn').addEventListener('click', restartGame);
+</script>
 </body>
 </html>
