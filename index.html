@@ -4,302 +4,308 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Designer or Homemaker?</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Playfair+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital@0;1&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-  font-family: 'Space Grotesk', sans-serif;
-  background: #F5F0E8;
-  color: #1A1A1A;
+  font-family: 'Space Mono', monospace;
+  background: #fff;
+  color: #000;
   min-height: 100vh;
 }
 
-/* screens */
-.screen { display: none; min-height: 100vh; }
-.screen.active { display: flex; flex-direction: column; }
+.screen { display: none; }
+.screen.active { display: block; }
 
 /* ── INTRO ── */
 #intro {
-  justify-content: center;
-  align-items: flex-start;
   padding: 3rem;
-  border-bottom: 3px solid #1A1A1A;
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
 }
+#intro.active { display: flex; }
 
-.tag {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+.intro-top h1 {
+  font-size: clamp(3.5rem, 12vw, 9rem);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  color: #888;
   margin-bottom: 2rem;
 }
 
-.intro-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(3rem, 9vw, 7rem);
-  font-weight: 400;
-  line-height: 1;
-  margin-bottom: 0.5rem;
+.intro-top h1 span {
+  display: block;
+  -webkit-text-stroke: 2px #000;
+  color: transparent;
 }
 
-.intro-title .or {
-  font-style: italic;
-  color: #C0392B;
-}
-
-.intro-rule { width: 100%; height: 3px; background: #1A1A1A; margin: 2rem 0; }
+hr { border: none; border-top: 2px solid #000; margin-bottom: 2rem; }
 
 .intro-desc {
-  font-size: 1rem;
-  color: #555;
-  max-width: 500px;
-  line-height: 1.7;
-  margin-bottom: 2.5rem;
+  font-size: 0.8rem;
+  line-height: 1.8;
+  max-width: 420px;
+  color: #000;
+  margin-bottom: 3rem;
 }
 
 .btn {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
   font-weight: 700;
-  background: #1A1A1A;
-  color: #F5F0E8;
-  border: 3px solid #1A1A1A;
-  padding: 1rem 2.5rem;
-  cursor: pointer;
-  letter-spacing: 0.04em;
   text-transform: uppercase;
-  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.08em;
+  background: #000;
+  color: #fff;
+  border: 2px solid #000;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  display: inline-block;
 }
-.btn:hover { background: #F5F0E8; color: #1A1A1A; }
+.btn:hover { background: #fff; color: #000; }
+
+.intro-bottom {
+  font-size: 0.65rem;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
 
 /* ── GAME ── */
 #game {
+  min-height: 100vh;
+  display: none;
   flex-direction: column;
 }
+#game.active { display: flex; }
 
-.game-top {
+.game-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.25rem 2rem;
-  border-bottom: 2px solid #1A1A1A;
-  font-size: 12px;
-  letter-spacing: 0.15em;
+  padding: 1rem 2rem;
+  border-bottom: 2px solid #000;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  color: #888;
+  letter-spacing: 0.12em;
 }
 
-.progress-wrap {
+.progress-track {
   flex: 1;
-  height: 4px;
-  background: #D5CEBD;
+  height: 2px;
+  background: #000;
   margin: 0 2rem;
+  position: relative;
 }
 .progress-fill {
-  height: 100%;
-  background: #C0392B;
-  transition: width 0.4s ease;
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  background: #fff;
+  border-right: 2px solid #000;
+  transition: width 0.3s;
 }
 
-.game-body {
+.game-main {
   flex: 1;
+  padding: 3rem 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 3rem 2rem;
-  max-width: 700px;
-  margin: 0 auto;
-  width: 100%;
+  max-width: 720px;
 }
 
-.who-said {
-  font-size: 11px;
-  letter-spacing: 0.2em;
+.q-label {
+  font-size: 0.65rem;
   text-transform: uppercase;
-  color: #888;
+  letter-spacing: 0.18em;
+  color: #999;
   margin-bottom: 1.5rem;
 }
 
-.quote-box {
-  border: 2px solid #1A1A1A;
-  padding: 2rem 2rem;
-  margin-bottom: 2.5rem;
-  background: #fff;
-}
-
-.quote-box p {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.2rem, 2.8vw, 1.6rem);
-  line-height: 1.55;
+.quote {
+  font-size: clamp(1rem, 2.5vw, 1.4rem);
   font-style: italic;
+  line-height: 1.6;
+  border-left: 4px solid #000;
+  padding-left: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .choices {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  gap: 0;
+  border: 2px solid #000;
 }
 
 .choice {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.9rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 1.4rem 1rem;
-  border: 2px solid #1A1A1A;
-  background: #F5F0E8;
+  letter-spacing: 0.08em;
+  padding: 1.5rem 1rem;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-right: 2px solid #000;
   cursor: pointer;
-  transition: background 0.12s, transform 0.1s;
+  transition: background 0.1s;
 }
-.choice:hover { background: #1A1A1A; color: #F5F0E8; }
-.choice:active { transform: scale(0.97); }
-.choice:disabled { opacity: 0.4; cursor: default; }
+.choice:last-child { border-right: none; }
+.choice:hover { background: #000; color: #fff; }
+.choice:disabled { opacity: 0.3; cursor: default; }
 
-/* ── REVEAL PANEL ── */
-.reveal-panel {
+/* ── REVEAL ── */
+#reveal {
   display: none;
   position: fixed;
   inset: 0;
-  background: rgba(26,26,26,0.85);
+  background: #000;
+  color: #fff;
+  padding: 3rem;
+  flex-direction: column;
+  justify-content: space-between;
   z-index: 100;
-  align-items: center;
-  justify-content: center;
-  padding: 2rem;
 }
-.reveal-panel.open { display: flex; }
-
-.reveal-box {
-  background: #F5F0E8;
-  border: 3px solid #1A1A1A;
-  padding: 2.5rem 2.5rem 2rem;
-  max-width: 540px;
-  width: 100%;
-  animation: popIn 0.25s cubic-bezier(.34,1.56,.64,1);
-}
-
-@keyframes popIn {
-  from { transform: scale(0.9); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
+#reveal.active { display: flex; }
 
 .verdict {
-  font-family: 'Playfair Display', serif;
-  font-size: 2rem;
-  line-height: 1.1;
+  font-size: clamp(2.5rem, 8vw, 6rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+}
+.verdict.both { color: #fff; }
+.verdict.close {
+  -webkit-text-stroke: 1.5px #fff;
+  color: transparent;
+}
+
+.reveal-mid { border-top: 1px solid #444; padding-top: 2rem; }
+
+.principle {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: #666;
   margin-bottom: 1rem;
 }
-.verdict.both { color: #1A6B3C; }
-.verdict.close { color: #C0392B; }
-
-.reveal-rule { width: 100%; height: 2px; background: #1A1A1A; margin: 1.2rem 0; }
 
 .explain {
-  font-size: 0.9rem;
-  line-height: 1.75;
-  color: #444;
-  margin-bottom: 1.2rem;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #ccc;
+  max-width: 560px;
 }
 
-.principle-tag {
-  display: inline-block;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+.btn-inv {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
   font-weight: 700;
-  background: #1A1A1A;
-  color: #F5F0E8;
-  padding: 0.3rem 0.8rem;
-  margin-bottom: 1.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #fff;
+  color: #000;
+  border: 2px solid #fff;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  align-self: flex-start;
 }
+.btn-inv:hover { background: #000; color: #fff; }
 
 /* ── END ── */
 #end {
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+  min-height: 100vh;
   padding: 3rem;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
 }
+#end.active { display: flex; }
 
 .end-title {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(2.2rem, 6vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-}
-.end-title em { font-style: italic; color: #C0392B; }
-
-.end-rule { width: 100%; height: 3px; background: #1A1A1A; margin: 1.5rem 0; }
-
-.end-body {
-  font-size: 0.95rem;
-  color: #555;
-  max-width: 580px;
-  line-height: 1.8;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
   margin-bottom: 2rem;
+}
+.end-title span {
+  display: block;
+  -webkit-text-stroke: 2px #000;
+  color: transparent;
 }
 
 .end-thesis {
-  border: 2px solid #1A1A1A;
-  padding: 1.5rem 2rem;
+  border-top: 2px solid #000;
+  border-bottom: 2px solid #000;
+  padding: 2rem 0;
+  font-size: 0.8rem;
+  line-height: 1.9;
+  color: #333;
   max-width: 620px;
   margin-bottom: 2rem;
-  background: #fff;
-  font-size: 0.9rem;
-  line-height: 1.8;
-  color: #333;
 }
-.end-thesis strong { color: #1A1A1A; }
 
 .stats {
   display: flex;
-  gap: 1px;
-  margin-bottom: 2.5rem;
-  background: #1A1A1A;
+  gap: 0;
+  border: 2px solid #000;
+  margin-bottom: 2rem;
+  max-width: 480px;
 }
 .stat {
-  background: #F5F0E8;
-  padding: 1.2rem 2rem;
-  text-align: center;
   flex: 1;
+  padding: 1.5rem;
+  border-right: 2px solid #000;
+  text-align: center;
 }
+.stat:last-child { border-right: none; }
 .stat-n {
-  font-family: 'Playfair Display', serif;
   font-size: 2.5rem;
-  color: #C0392B;
+  font-weight: 700;
   line-height: 1;
+  display: block;
 }
 .stat-label {
-  font-size: 10px;
+  font-size: 0.6rem;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: #888;
+  letter-spacing: 0.12em;
+  color: #999;
   margin-top: 0.4rem;
+  display: block;
 }
 
 .btn-ghost {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.85rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.8rem;
   font-weight: 700;
-  background: transparent;
-  color: #1A1A1A;
-  border: 2px solid #1A1A1A;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: #fff;
+  color: #000;
+  border: 2px solid #000;
   padding: 0.85rem 2rem;
   cursor: pointer;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  transition: background 0.12s, color 0.12s;
 }
-.btn-ghost:hover { background: #1A1A1A; color: #F5F0E8; }
+.btn-ghost:hover { background: #000; color: #fff; }
 
 @media (max-width: 600px) {
-  #intro, #end { padding: 2rem 1.5rem; }
-  .game-body { padding: 2rem 1.5rem; }
+  #intro, #end, #reveal { padding: 1.5rem; }
+  .game-main { padding: 2rem 1.5rem; }
   .choices { grid-template-columns: 1fr; }
-  .stats { flex-direction: column; gap: 1px; }
-  .reveal-box { padding: 2rem 1.5rem; }
-  .game-top { padding: 1rem 1.5rem; }
+  .choice { border-right: none; border-bottom: 2px solid #000; }
+  .choice:last-child { border-bottom: none; }
+  .stats { flex-direction: column; }
+  .stat { border-right: none; border-bottom: 2px solid #000; }
+  .stat:last-child { border-bottom: none; }
+  .game-bar { padding: 1rem 1.5rem; }
 }
 </style>
 </head>
@@ -307,109 +313,107 @@ body {
 
 <!-- INTRO -->
 <div id="intro" class="screen active">
-  <p class="tag">Design Studies — Final Project, Option 1</p>
-  <h1 class="intro-title">Designer<br><span class="or">or</span><br>Homemaker?</h1>
-  <div class="intro-rule"></div>
-  <p class="intro-desc">Read a real quote. Guess who said it — a professional designer or a homemaker. Play all 7 rounds to find out why the answer matters.</p>
-  <button class="btn" id="startBtn">Play Now →</button>
+  <div class="intro-top">
+    <h1>Designer<span>Or</span>Homemaker?</h1>
+    <hr>
+    <p class="intro-desc">Read a real quote. Guess who said it — a professional designer or a homemaker. 7 rounds. The answer will surprise you every time.</p>
+    <button class="btn" id="startBtn">Start →</button>
+  </div>
+  <div class="intro-bottom">Design Studies — Final Project, Option 1</div>
 </div>
 
 <!-- GAME -->
 <div id="game" class="screen">
-  <div class="game-top">
-    <span id="roundNum">Round 1 / 7</span>
-    <div class="progress-wrap">
-      <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  <div class="game-bar">
+    <span id="roundNum">01 / 07</span>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill" style="width:100%"></div>
     </div>
     <span id="scoreNum">Score: 0</span>
   </div>
-  <div class="game-body">
-    <p class="who-said">Who said this?</p>
-    <div class="quote-box">
-      <p id="quoteText"></p>
-    </div>
+  <div class="game-main">
+    <p class="q-label">— Who said this?</p>
+    <p class="quote" id="quoteText"></p>
     <div class="choices">
-      <button class="choice" id="btnDesigner">🏢 Professional Designer</button>
-      <button class="choice" id="btnHomemaker">🏠 Homemaker</button>
+      <button class="choice" id="btnDesigner">Professional Designer</button>
+      <button class="choice" id="btnHomemaker">Homemaker</button>
     </div>
   </div>
 </div>
 
-<!-- REVEAL PANEL -->
-<div class="reveal-panel" id="revealPanel">
-  <div class="reveal-box">
-    <p class="verdict" id="revealVerdict"></p>
-    <div class="reveal-rule"></div>
+<!-- REVEAL (full screen) -->
+<div id="reveal" class="screen">
+  <p class="verdict" id="revealVerdict"></p>
+  <div class="reveal-mid">
+    <p class="principle" id="revealPrinciple"></p>
     <p class="explain" id="revealExplain"></p>
-    <span class="principle-tag" id="revealPrinciple"></span>
-    <br>
-    <button class="btn" id="btnNext">Next Round →</button>
   </div>
+  <button class="btn-inv" id="btnNext">Next →</button>
 </div>
 
 <!-- END -->
 <div id="end" class="screen">
-  <p class="tag">The answer was always the same</p>
-  <h2 class="end-title">She was the<br><em>designer</em><br>all along.</h2>
-  <div class="end-rule"></div>
-  <p class="end-body">Every single quote came from our research subject — a homemaker with no formal design training, no title, no salary. Every single principle is taught in design school.</p>
-  <div class="end-thesis">
-    <strong>The argument this game just made:</strong><br><br>
-    The gap between "homemaker" and "designer" is not a gap of skill or intent — it is a gap of <strong>recognition</strong>. Produced by gender norms that coded the domestic sphere as trivial, economic systems that made unpaid labor invisible, and design institutions that built their identity by excluding her. She selects materials, designs for atmosphere, iterates on workflows, and thinks about her users. The only thing missing is the word <strong>"designer"</strong> on the door.
+  <div>
+    <p class="end-title">She Was<br>The<span>Designer.</span></p>
+    <p class="end-thesis">
+      Every quote came from our research subject — a homemaker. No formal training. No title. No salary. Every principle is taught in design school.<br><br>
+      The gap between "homemaker" and "designer" is not a gap of skill. It is a gap of recognition — built by gender norms, unpaid labor economics, and institutional gatekeeping. She selects materials. She designs for atmosphere. She iterates. She centers the user. The only thing missing is the word "designer" on the door.
+    </p>
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-n">7</span>
+        <span class="stat-label">Principles</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n">1</span>
+        <span class="stat-label">Person</span>
+      </div>
+      <div class="stat">
+        <span class="stat-n" id="finalScore">0</span>
+        <span class="stat-label">Your Score</span>
+      </div>
+    </div>
+    <button class="btn-ghost" id="restartBtn">↺ Play Again</button>
   </div>
-  <div class="stats">
-    <div class="stat">
-      <div class="stat-n">7</div>
-      <div class="stat-label">Design Principles</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n">1</div>
-      <div class="stat-label">Person. No training.</div>
-    </div>
-    <div class="stat">
-      <div class="stat-n" id="finalScore">0/7</div>
-      <div class="stat-label">Your Score</div>
-    </div>
-  </div>
-  <button class="btn-ghost" id="restartBtn">↺ Play Again</button>
+  <div class="intro-bottom">Design Studies — Final Project, Option 1</div>
 </div>
 
 <script>
 var rounds = [
   {
-    quote: "\"It's more like — you first sense the problem, and then you make the changes. One gradually figures out what is more efficient and less strenuous.\"",
-    principle: "Iterative Design",
-    explain: "This is textbook iterative design thinking — responding to friction rather than following a fixed plan. Design schools call it 'reflective practice.' She's been doing it her whole life without the label."
+    quote: '"It\'s more like — you first sense the problem, and then you make the changes. One gradually figures out what is more efficient and less strenuous."',
+    principle: "Design Principle: Iterative Design",
+    explain: "Responding to friction rather than following a fixed plan. Design schools call it 'reflective practice.' She's been doing it her whole life without the label."
   },
   {
-    quote: "\"Beige wooden floorboards, a cotton and linen carpet, a large comfortable white-painted leather sofa — the entire space should exude a relaxed and laid-back atmosphere.\"",
-    principle: "Material Specification & Experiential Intent",
-    explain: "Material specification with a defined experiential goal. Interior designers charge thousands to make exactly this kind of decision. The vocabulary and logic are identical — only the paycheck differs."
+    quote: '"Beige wooden floorboards, a cotton and linen carpet, a large comfortable white-painted leather sofa — the entire space should exude a relaxed and laid-back atmosphere."',
+    principle: "Design Principle: Material Specification",
+    explain: "Material selection with a defined experiential goal. Interior designers charge thousands to make exactly this decision. The vocabulary and logic are identical — only the paycheck differs."
   },
   {
-    quote: "\"When cooking, I don't like to walk back and forth many times. So I place the things I use frequently in a more convenient location.\"",
-    principle: "Ergonomics & Workflow Optimization",
-    explain: "This is ergonomic flow analysis — the exact logic taught in industrial and kitchen design programs. She self-taught what design schools call 'user flow optimization.'"
+    quote: '"When cooking, I don\'t like to walk back and forth many times. So I place the things I use frequently in a more convenient location."',
+    principle: "Design Principle: Ergonomics & Workflow",
+    explain: "Ergonomic flow analysis — the exact logic taught in industrial and kitchen design programs. She self-taught what design schools call 'user flow optimization.'"
   },
   {
-    quote: "\"I hope the final effect will be one of tenderness, brightness, and rich texture — representing a gentle and beautiful life.\"",
-    principle: "Experience Design / Emotional Outcome",
-    explain: "She is designing for a felt emotional experience — the explicit goal of experience design and spatial design. 'Beauty is the foundation of the essence of everything' is not a casual statement. It is a design brief."
+    quote: '"I hope the final effect will be one of tenderness, brightness, and rich texture — representing a gentle and beautiful life."',
+    principle: "Design Principle: Experience Design",
+    explain: "Designing for a felt emotional experience — the explicit goal of spatial and experience design. 'Beauty is the foundation of the essence of everything' is not a casual statement. It is a design brief."
   },
   {
-    quote: "\"The furniture will be chosen from minimalist yet detailed designs by the designers, which can stand the test of time.\"",
-    principle: "Curatorial Judgment & Long-Term Design Thinking",
-    explain: "She evaluates objects for coherence, restraint, and longevity — the same criteria used in design curation and museum acquisition. That is taste, and taste is a learnable, practiced design skill."
+    quote: '"The furniture will be chosen from minimalist yet detailed designs by the designers, which can stand the test of time."',
+    principle: "Design Principle: Curatorial Judgment",
+    explain: "Evaluating objects for coherence, restraint, and longevity — the same criteria used in design curation and museum acquisition. That is taste, and taste is a practiced design skill."
   },
   {
-    quote: "\"Don't just copy what you see online. Those pictures look beautiful but they're not real life. You still have to cook in that kitchen every single night.\"",
-    principle: "User-Centered Design",
-    explain: "She is spontaneously articulating the central critique of aesthetics-over-function — a foundational debate in design education. Design must serve the person who actually lives in it. She knows this."
+    quote: '"Don\'t just copy what you see online. Those pictures look beautiful but they\'re not real life. You still have to cook in that kitchen every night."',
+    principle: "Design Principle: User-Centered Design",
+    explain: "The central critique of aesthetics-over-function — a foundational debate in design education. She articulated it spontaneously, without ever sitting in a design class."
   },
   {
-    quote: "\"Only when these things are left undone will the family become disordered, and only then will everyone suddenly realize its significance.\"",
-    principle: "Invisible Infrastructure / Critical Design",
-    explain: "Good design disappears when it works. Its value is felt only in its absence — this is what theorists call 'invisible labor.' She didn't read it in a textbook. She lived it, every day, for decades."
+    quote: '"Only when these things are left undone will the family become disordered, and only then will everyone suddenly realize its significance."',
+    principle: "Design Principle: Invisible Infrastructure",
+    explain: "Good design disappears when it works. Its value is felt only in its absence — what theorists call 'invisible labor.' She didn't read this in a textbook. She lived it."
   }
 ];
 
@@ -424,9 +428,10 @@ function show(id) {
 function loadRound() {
   var r = rounds[current];
   document.getElementById('quoteText').textContent = r.quote;
-  document.getElementById('roundNum').textContent = 'Round ' + (current + 1) + ' / ' + rounds.length;
+  document.getElementById('roundNum').textContent = (current + 1 < 10 ? '0' : '') + (current + 1) + ' / 07';
   document.getElementById('scoreNum').textContent = 'Score: ' + score;
-  document.getElementById('progressFill').style.width = ((current / rounds.length) * 100) + '%';
+  // progress fill goes from right: shows how much is left
+  document.getElementById('progressFill').style.width = (100 - ((current / rounds.length) * 100)) + '%';
   document.getElementById('btnDesigner').disabled = false;
   document.getElementById('btnHomemaker').disabled = false;
 }
@@ -436,54 +441,47 @@ function guess(choice) {
   document.getElementById('btnHomemaker').disabled = true;
 
   var r = rounds[current];
-  var correct = (choice === 'homemaker');
-  if (correct) score++;
+  if (choice === 'homemaker') score++;
 
-  var verdict = document.getElementById('revealVerdict');
-  if (correct) {
-    verdict.textContent = 'She is both.';
-    verdict.className = 'verdict both';
+  var v = document.getElementById('revealVerdict');
+  if (choice === 'homemaker') {
+    v.textContent = 'She Is Both.';
+    v.className = 'verdict both';
   } else {
-    verdict.textContent = 'Close — she IS the designer.';
-    verdict.className = 'verdict close';
+    v.textContent = 'She Is The Designer.';
+    v.className = 'verdict close';
   }
 
-  document.getElementById('revealExplain').textContent = r.explain;
   document.getElementById('revealPrinciple').textContent = r.principle;
+  document.getElementById('revealExplain').textContent = r.explain;
+  document.getElementById('btnNext').textContent = (current === rounds.length - 1) ? 'See Conclusion →' : 'Next →';
 
-  var isLast = current === rounds.length - 1;
-  document.getElementById('btnNext').textContent = isLast ? 'See the conclusion →' : 'Next round →';
-
-  document.getElementById('revealPanel').classList.add('open');
+  show('reveal');
 }
 
 function nextRound() {
-  document.getElementById('revealPanel').classList.remove('open');
   current++;
   if (current >= rounds.length) {
-    document.getElementById('finalScore').textContent = score + '/' + rounds.length;
+    document.getElementById('finalScore').textContent = score + '/7';
     show('end');
   } else {
     loadRound();
+    show('game');
   }
-}
-
-function restartGame() {
-  current = 0;
-  score = 0;
-  loadRound();
-  show('game');
 }
 
 document.getElementById('startBtn').addEventListener('click', function() {
   loadRound();
   show('game');
 });
-
 document.getElementById('btnDesigner').addEventListener('click', function() { guess('designer'); });
 document.getElementById('btnHomemaker').addEventListener('click', function() { guess('homemaker'); });
 document.getElementById('btnNext').addEventListener('click', nextRound);
-document.getElementById('restartBtn').addEventListener('click', restartGame);
+document.getElementById('restartBtn').addEventListener('click', function() {
+  current = 0; score = 0;
+  loadRound();
+  show('game');
+});
 </script>
 </body>
 </html>
